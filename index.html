@@ -25,7 +25,7 @@
 
     <div class="menu">
       <button class="pill pink" data-open="about">about me</button>
-      <button class="pill lilac" data-open="gallery">gallery</button>
+      <button class="pill lilac" id="openGallery">gallery</button>
       <a class="pill mint" href="https://www.instagram.com/nyxrelicx/" target="_blank" rel="noopener">instagram</a>
     </div>
   </main>
@@ -41,23 +41,22 @@
     </div>
   </dialog>
 
-  <!-- Gallery popup -->
-  <dialog id="gallery" class="popup wide">
-    <div class="inner">
-      <button class="x" aria-label="Close">&times;</button>
-      <h2>gallery &#10024;</h2>
-      <p class="hint">tap a painting to see it bigger</p>
-      <ul id="grid"></ul>
+  <!-- Gallery theater: one painting at a time, click to reveal the next -->
+  <dialog id="theater" aria-label="Gallery">
+    <button class="x" aria-label="Close">&times;</button>
+    <div id="stage">
+      <div id="card" class="card">
+        <h2>gallery &#10024;</h2>
+        <p>click to begin</p>
+      </div>
+      <figure id="frame" hidden>
+        <img id="big" alt="">
+        <figcaption id="cap"></figcaption>
+      </figure>
     </div>
-  </dialog>
-
-  <!-- Big painting -->
-  <dialog id="viewer" class="popup">
-    <div class="inner">
-      <button class="x" aria-label="Close">&times;</button>
-      <img id="big" alt="">
-      <p id="cap"></p>
-    </div>
+    <button class="nav prev" aria-label="Previous painting">&#8249;</button>
+    <button class="nav next" aria-label="Next painting">&#8250;</button>
+    <div id="count" aria-live="polite"></div>
   </dialog>
 
   <script src="script.js"></script>
