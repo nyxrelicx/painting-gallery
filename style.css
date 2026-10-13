@@ -1,0 +1,44 @@
+body {
+  font-family: Georgia, serif;
+  background-color: #fdf6f0;
+  color: #4a4a4a;
+  margin: 0;
+  padding: 20px;
+  text-align: center;
+}
+
+header h1 {
+  font-size: 2.5rem;
+  margin-bottom: 0;
+}
+
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+  max-width: 1000px;
+  margin: 30px auto;
+}
+
+figure {
+  margin: 0;
+  background: white;
+  padding: 12px;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+figure img {
+  width: 100%;
+  border-radius: 4px;
+}
+
+figcaption {
+  margin-top: 8px;
+  font-style: italic;
+}
+
+footer {
+  margin-top: 40px;
+  font-size: 0.9rem;
+}
