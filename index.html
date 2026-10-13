@@ -3,64 +3,61 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Art that speaks without words</title>
+  <title>nyxrelicx | art corner</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@200;300;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-  <section class="sheet hero" id="top">
-    <nav>
-      <a href="#top" class="logo">YOUR NAME</a>
-      <a href="#about">about</a>
-      <a href="#gallery">gallery</a>
-      <a href="#contact">contact</a>
-    </nav>
+  <main>
+    <h1>nyxrelicx</h1>
+    <p class="sub">my little art corner &#9825;</p>
 
-    <h1><span>ART</span><span>THAT</span><span>SPEAKS</span></h1>
-    <p class="tagline">without words</p>
-
-    <figure class="h1"><img data-n="1" alt="Painting 1"></figure>
-    <figure class="h2"><img data-n="2" alt="Painting 2"></figure>
-    <figure class="h3"><img data-n="3" alt="Painting 3"></figure>
-
-    <a href="#gallery" class="scroll" aria-label="Scroll down to the gallery">
-      <svg viewBox="0 0 100 100" aria-hidden="true">
-        <defs><path id="c" d="M50,50 m-38,0 a38,38 0 1,1 76,0 a38,38 0 1,1 -76,0"/></defs>
-        <text><textPath href="#c">scroll down to see more * scroll down to see more *</textPath></text>
-      </svg>
-      <span>&darr;</span>
-    </a>
-  </section>
-
-  <section class="sheet about" id="about">
-    <div>
-      <h2>ABOUT</h2>
-      <h3>Your name here</h3>
-      <p>Write two or three short sentences about yourself and how you paint. What do you like to paint? What materials do you use?</p>
-      <p>Edit this text in <code>index.html</code>.</p>
+    <div class="shelf">
+      <button class="polaroid"><img data-n="1" alt="Painting 1"></button>
+      <button class="polaroid"><img data-n="2" alt="Painting 2"></button>
+      <button class="polaroid"><img data-n="3" alt="Painting 3"></button>
+      <button class="polaroid"><img data-n="5" alt="Painting 5"></button>
+      <button class="polaroid"><img data-n="6" alt="Painting 6"></button>
     </div>
-    <figure><img data-n="4" alt="Painting 4"></figure>
-  </section>
 
-  <section class="sheet gallery" id="gallery">
-    <h2>GALLERY</h2>
-    <p class="intro">A selection of my paintings. Click one to see it bigger.</p>
-    <ul class="track" id="track"></ul>
-  </section>
+    <div class="menu">
+      <button class="pill pink" data-open="about">about me</button>
+      <button class="pill lilac" data-open="gallery">gallery</button>
+      <a class="pill mint" href="https://www.instagram.com/nyxrelicx/" target="_blank" rel="noopener">instagram</a>
+    </div>
+  </main>
 
-  <section class="sheet contact" id="contact">
-    <h2>CONTACT</h2>
-    <p><a href="mailto:you@example.com">you@example.com</a></p>
-    <p><a href="https://instagram.com/yourname">instagram</a></p>
-  </section>
+  <!-- About popup -->
+  <dialog id="about" class="popup">
+    <div class="inner">
+      <button class="x" aria-label="Close">&times;</button>
+      <h2>about me &#10047;</h2>
+      <p>Hi! I'm nyxrelicx. I paint (write what you paint here!).</p>
+      <p>Write two or three sentences about yourself here. Edit them in <code>index.html</code>.</p>
+      <a class="pill mint" href="https://www.instagram.com/nyxrelicx/" target="_blank" rel="noopener">follow me on instagram</a>
+    </div>
+  </dialog>
 
-  <dialog id="viewer">
-    <button id="close" aria-label="Close">&times;</button>
-    <img id="big" alt="">
-    <p id="cap"></p>
+  <!-- Gallery popup -->
+  <dialog id="gallery" class="popup wide">
+    <div class="inner">
+      <button class="x" aria-label="Close">&times;</button>
+      <h2>gallery &#10024;</h2>
+      <p class="hint">tap a painting to see it bigger</p>
+      <ul id="grid"></ul>
+    </div>
+  </dialog>
+
+  <!-- Big painting -->
+  <dialog id="viewer" class="popup">
+    <div class="inner">
+      <button class="x" aria-label="Close">&times;</button>
+      <img id="big" alt="">
+      <p id="cap"></p>
+    </div>
   </dialog>
 
   <script src="script.js"></script>

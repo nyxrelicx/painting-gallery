@@ -1,45 +1,73 @@
-// Edit titles here: number of the painting -> its title
+// Give your paintings names here. Remove the // and type a title:
 const titles = {
-  // 1: 'Sun Ringing',
-  // 2: 'Silly Dog',
+  // 1: 'My first painting',
+  // 2: 'Sleepy cat',
 };
 const COUNT = 27;
+
 const exts = ['png', 'JPG', 'jpg', 'jpeg', 'PNG'];
 const known = { 9: 'JPG', 10: 'JPG', 11: 'JPG' };
-
 const titleOf = n => titles[n] || 'Painting ' + n;
 
-// Try each file extension until the image loads
+// Tries each file ending until the picture loads
 function load(img, n) {
   let i = known[n] ? exts.indexOf(known[n]) : 0;
   img.onerror = () => { if (++i < exts.length) img.src = `images/p${n}.${exts[i]}`; };
   img.src = `images/p${n}.${exts[i]}`;
 }
 
-document.querySelectorAll('img[data-n]').forEach(img => load(img, +img.dataset.n));
-
-const track = document.getElementById('track');
+// Big painting viewer
 const viewer = document.getElementById('viewer');
-const big = document.getElementById('big');
-const cap = document.getElementById('cap');
+function openBig(img, n) {
+  document.getElementById('big').src = img.src;
+  document.getElementById('big').alt = titleOf(n);
+  document.getElementById('cap').textContent = titleOf(n);
+  viewer.showModal();
+}
 
+// Floating paintings on the home screen
+document.querySelectorAll('.polaroid img').forEach(img => {
+  const n = +img.dataset.n;
+  load(img, n);
+  img.parentElement.addEventListener('click', () => openBig(img, n));
+});
+
+// Gallery grid
+const grid = document.getElementById('grid');
 for (let n = 1; n <= COUNT; n++) {
   const li = document.createElement('li');
+  li.style.setProperty('--i', n);
   const btn = document.createElement('button');
   const img = document.createElement('img');
   img.loading = 'lazy';
   img.alt = titleOf(n);
   load(img, n);
-  const label = document.createElement('span');
-  label.textContent = titleOf(n);
-  btn.append(img, label);
-  btn.addEventListener('click', () => {
-    big.src = img.src; big.alt = img.alt; cap.textContent = titleOf(n);
-    viewer.showModal();
-  });
+  btn.append(img);
+  btn.addEventListener('click', () => openBig(img, n));
   li.append(btn);
-  track.append(li);
+  grid.append(li);
 }
 
-document.getElementById('close').addEventListener('click', () => viewer.close());
-viewer.addEventListener('click', e => { if (e.target === viewer) viewer.close(); });
+// Open and close popups
+document.querySelectorAll('[data-open]').forEach(b =>
+  b.addEventListener('click', () => document.getElementById(b.dataset.open).showModal()));
+document.querySelectorAll('dialog').forEach(d => {
+  d.querySelector('.x').addEventListener('click', () => d.close());
+  d.addEventListener('click', e => { if (e.target === d) d.close(); });
+});
+
+// Sparkles that follow the mouse
+if (!matchMedia('(prefers-reduced-motion: reduce)').matches && matchMedia('(pointer: fine)').matches) {
+  let last = 0;
+  addEventListener('pointermove', e => {
+    if (e.timeStamp - last < 70) return;
+    last = e.timeStamp;
+    const s = document.createElement('span');
+    s.className = 'spark';
+    s.textContent = ['✦', '✧', '♡'][Math.floor(Math.random() * 3)];
+    s.style.left = e.clientX + 'px';
+    s.style.top = e.clientY + 'px';
+    document.body.append(s);
+    setTimeout(() => s.remove(), 800);
+  });
+}
