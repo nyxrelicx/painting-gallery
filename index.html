@@ -1,49 +1,68 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Painting Gallery</title>
-        <link rel="stylesheet" href="styles.css">
-    </head>
-    <body>
-        <header>
-            <h1>My Painting Gallery</h1>
-            <p> A little collection of things I've done :3</p>
-        </header>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Art that speaks without words</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@200;300;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
 
-          <main class="gallery">
-    <figure><img src="images/p1.png" alt="Painting 1" loading="lazy"><figcaption>Painting 1</figcaption></figure>
-    <figure><img src="images/p2.png" alt="Painting 2" loading="lazy"><figcaption>Painting 2</figcaption></figure>
-    <figure><img src="images/p3.png" alt="Painting 3" loading="lazy"><figcaption>Painting 3</figcaption></figure>
-    <figure><img src="images/p4.png" alt="Painting 4" loading="lazy"><figcaption>Painting 4</figcaption></figure>
-    <figure><img src="images/p5.png" alt="Painting 5" loading="lazy"><figcaption>Painting 5</figcaption></figure>
-    <figure><img src="images/p6.png" alt="Painting 6" loading="lazy"><figcaption>Painting 6</figcaption></figure>
-    <figure><img src="images/p7.png" alt="Painting 7" loading="lazy"><figcaption>Painting 7</figcaption></figure>
-    <figure><img src="images/p8.png" alt="Painting 8" loading="lazy"><figcaption>Painting 8</figcaption></figure>
-    <figure><img src="images/p9.JPG" alt="Painting 9" loading="lazy"><figcaption>Painting 9</figcaption></figure>
-    <figure><img src="images/p10.JPG" alt="Painting 10" loading="lazy"><figcaption>Painting 10</figcaption></figure>
-    <figure><img src="images/p11.JPG" alt="Painting 11" loading="lazy"><figcaption>Painting 11</figcaption></figure>
-    <figure><img src="images/p12.png" alt="Painting 12" loading="lazy"><figcaption>Painting 12</figcaption></figure>
-    <figure><img src="images/p13.png" alt="Painting 13" loading="lazy"><figcaption>Painting 13</figcaption></figure>
-    <figure><img src="images/p14.png" alt="Painting 14" loading="lazy"><figcaption>Painting 14</figcaption></figure>
-    <figure><img src="images/p15.png" alt="Painting 15" loading="lazy"><figcaption>Painting 15</figcaption></figure>
-    <figure><img src="images/p16.png" alt="Painting 16" loading="lazy"><figcaption>Painting 16</figcaption></figure>
-    <figure><img src="images/p17.png" alt="Painting 17" loading="lazy"><figcaption>Painting 17</figcaption></figure>
-    <figure><img src="images/p18.png" alt="Painting 18" loading="lazy"><figcaption>Painting 18</figcaption></figure>
-    <figure><img src="images/p19.png" alt="Painting 19" loading="lazy"><figcaption>Painting 19</figcaption></figure>
-    <figure><img src="images/p20.png" alt="Painting 20" loading="lazy"><figcaption>Painting 20</figcaption></figure>
-    <figure><img src="images/p21.png" alt="Painting 21" loading="lazy"><figcaption>Painting 21</figcaption></figure>
-    <figure><img src="images/p22.png" alt="Painting 22" loading="lazy"><figcaption>Painting 22</figcaption></figure>
-    <figure><img src="images/p23.png" alt="Painting 23" loading="lazy"><figcaption>Painting 23</figcaption></figure>
-    <figure><img src="images/p24.png" alt="Painting 24" loading="lazy"><figcaption>Painting 24</figcaption></figure>
-    <figure><img src="images/p25.png" alt="Painting 25" loading="lazy"><figcaption>Painting 25</figcaption></figure>
-    <figure><img src="images/p26.png" alt="Painting 26" loading="lazy"><figcaption>Painting 26</figcaption></figure>
-    <figure><img src="images/p27.png" alt="Painting 27" loading="lazy"><figcaption>Painting 27</figcaption></figure>
-  </main>
+  <section class="sheet hero" id="top">
+    <nav>
+      <a href="#top" class="logo">YOUR NAME</a>
+      <a href="#about">about</a>
+      <a href="#gallery">gallery</a>
+      <a href="#contact">contact</a>
+    </nav>
 
-  <footer>
-    <p> Made with love x</p>
-  </footer>
-  </body>
+    <h1><span>ART</span><span>THAT</span><span>SPEAKS</span></h1>
+    <p class="tagline">without words</p>
+
+    <figure class="h1"><img data-n="1" alt="Painting 1"></figure>
+    <figure class="h2"><img data-n="2" alt="Painting 2"></figure>
+    <figure class="h3"><img data-n="3" alt="Painting 3"></figure>
+
+    <a href="#gallery" class="scroll" aria-label="Scroll down to the gallery">
+      <svg viewBox="0 0 100 100" aria-hidden="true">
+        <defs><path id="c" d="M50,50 m-38,0 a38,38 0 1,1 76,0 a38,38 0 1,1 -76,0"/></defs>
+        <text><textPath href="#c">scroll down to see more * scroll down to see more *</textPath></text>
+      </svg>
+      <span>&darr;</span>
+    </a>
+  </section>
+
+  <section class="sheet about" id="about">
+    <div>
+      <h2>ABOUT</h2>
+      <h3>Your name here</h3>
+      <p>Write two or three short sentences about yourself and how you paint. What do you like to paint? What materials do you use?</p>
+      <p>Edit this text in <code>index.html</code>.</p>
+    </div>
+    <figure><img data-n="4" alt="Painting 4"></figure>
+  </section>
+
+  <section class="sheet gallery" id="gallery">
+    <h2>GALLERY</h2>
+    <p class="intro">A selection of my paintings. Click one to see it bigger.</p>
+    <ul class="track" id="track"></ul>
+  </section>
+
+  <section class="sheet contact" id="contact">
+    <h2>CONTACT</h2>
+    <p><a href="mailto:you@example.com">you@example.com</a></p>
+    <p><a href="https://instagram.com/yourname">instagram</a></p>
+  </section>
+
+  <dialog id="viewer">
+    <button id="close" aria-label="Close">&times;</button>
+    <img id="big" alt="">
+    <p id="cap"></p>
+  </dialog>
+
+  <script src="script.js"></script>
+</body>
 </html>
