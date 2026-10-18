@@ -1,13 +1,13 @@
 /* Handwritten font. Caveat (Google Fonts) is the stand-in; if you own the "des Montilles" font,
    put the file in a fonts/ folder named DesMontilles.woff2 or DesMontilles.otf and it will be used instead. */
 @font-face { font-family:'Des Montilles'; src:url('fonts/DesMontilles.woff2') format('woff2'), url('fonts/DesMontilles.otf') format('opentype'); font-display:swap; }
-:root { --red:#e8210f; --font:'Des Montilles','Caveat',cursive; --ink:#4a3b5c; --pink:#ffc2dd; --lilac:#dccdff; --mint:#c4f0e0; --cream:#fff8f1; }
+:root { --accent:#AC274F; --font:'Des Montilles','Caveat',cursive; --ink:#191516; --charcoal:#382E31; --pink:#EB638B; --lilac:#FFD9DA; --mint:#AC274F; --cream:#FFD9DA; }
 * { box-sizing:border-box; }
 body {
   margin:0; min-height:100vh; min-height:100dvh; display:grid; place-items:center; padding:24px 16px;
-  font-family:var(--font); font-size:1.25rem; color:var(--red); text-align:center; overflow-x:hidden;
-  background:radial-gradient(circle at 15% 20%, #ffe3f0 0, transparent 40%),
-             radial-gradient(circle at 85% 80%, #e6dcff 0, transparent 45%), var(--cream);
+  font-family:var(--font); font-size:1.25rem; color:var(--accent); text-align:center; overflow-x:hidden;
+  background:radial-gradient(circle at 15% 20%, #ffeceb 0, transparent 40%),
+             radial-gradient(circle at 85% 80%, #f6a8bd 0, transparent 45%), var(--cream);
 }
 h1 { margin:0; font-size:clamp(3.6rem,14vw,7.5rem); font-weight:700; line-height:.9; transform:rotate(-3deg); }
 :focus-visible { outline:3px solid var(--ink); outline-offset:3px; }
@@ -20,22 +20,22 @@ h1 { margin:0; font-size:clamp(3.6rem,14vw,7.5rem); font-weight:700; line-height
 .polaroid:nth-child(1){--r:-5deg;--d:0s} .polaroid:nth-child(2){--r:3deg;--d:.5s} .polaroid:nth-child(3){--r:-2deg;--d:1s}
 .polaroid:nth-child(4){--r:5deg;--d:1.5s} .polaroid:nth-child(5){--r:-4deg;--d:2s}
 .polaroid:hover, .polaroid:focus-visible { transform:rotate(0) scale(1.12); animation-play-state:paused; z-index:2; }
-.polaroid img { width:100%; aspect-ratio:3/4; object-fit:cover; border-radius:6px; display:block; background:#f1e9f5; }
+.polaroid img { width:100%; aspect-ratio:3/4; object-fit:cover; border-radius:6px; display:block; background:#f6d0d4; }
 @keyframes float { 50% { translate:0 -10px; } }
 
 /* sticker buttons */
 .menu { display:flex; flex-wrap:wrap; justify-content:center; gap:14px; }
-.pill { all:unset; cursor:pointer; box-sizing:border-box; padding:12px 28px; font:600 1.7rem/1 var(--font); color:var(--red);
+.pill { all:unset; cursor:pointer; box-sizing:border-box; padding:12px 28px; font:600 1.7rem/1 var(--font); color:var(--accent);
   border:3px solid var(--ink); border-radius:999px; box-shadow:4px 4px 0 var(--ink); transition:transform .15s, box-shadow .15s; }
 .pill:hover, .pill:focus-visible { transform:translate(-2px,-3px) rotate(-2deg); box-shadow:7px 8px 0 var(--ink); }
 .pill:active { transform:translate(3px,3px); box-shadow:1px 1px 0 var(--ink); }
-.pink{background:var(--pink)} .lilac{background:var(--lilac)} .mint{background:var(--mint)}
+.pink{background:var(--pink);color:var(--ink)} .lilac{background:var(--lilac)} .mint{background:var(--mint);color:var(--cream)}
 
 /* about popup */
-.popup { border:3px solid var(--ink); border-radius:24px; padding:0; background:var(--cream); color:var(--red);
+.popup { border:3px solid var(--ink); border-radius:24px; padding:0; background:var(--cream); color:var(--accent);
   width:min(92vw,460px); max-height:90vh; box-shadow:8px 8px 0 var(--ink); }
 .popup[open] { animation:pop .45s cubic-bezier(.3,1.6,.5,1); }
-.popup::backdrop { background:rgba(74,59,92,.45); backdrop-filter:blur(3px); }
+.popup::backdrop { background:rgba(25,21,22,.55); backdrop-filter:blur(3px); }
 @keyframes pop { from { transform:scale(.5) rotate(-4deg); opacity:0; } }
 .inner { padding:28px; position:relative; }
 .inner h2 { margin:0 0 12px; font-size:3rem; line-height:1; }
@@ -47,18 +47,18 @@ h1 { margin:0; font-size:clamp(3.6rem,14vw,7.5rem); font-weight:700; line-height
 /* gallery theater: fullscreen, one painting at a time, no scrolling */
 #theater { width:100vw; height:100vh; height:100dvh; max-width:none; max-height:none; margin:0; padding:0; border:0;
   overflow:hidden; color:var(--cream); text-align:center; user-select:none; -webkit-user-select:none;
-  background:radial-gradient(ellipse at center, #3a2a4d 0, #1a1224 60%, #0d0813 100%); }
+  background:radial-gradient(ellipse at center, #382E31 0, #191516 75%); }
 #theater[open] { animation:dim .6s ease both; }
-#theater::backdrop { background:#0d0813; }
+#theater::backdrop { background:#0e0b0c; }
 /* cinema bars */
-#theater::before, #theater::after { content:''; position:absolute; left:0; right:0; height:7vh; background:#0d0813; z-index:3; pointer-events:none; }
+#theater::before, #theater::after { content:''; position:absolute; left:0; right:0; height:7vh; background:#0e0b0c; z-index:3; pointer-events:none; }
 #theater::before { top:0; } #theater::after { bottom:0; }
 @keyframes dim { from { opacity:0; } }
 
 #stage { position:absolute; inset:0; display:grid; place-items:center; cursor:pointer; padding:9vh 4vw; }
 #theater .x { top:calc(7vh + 10px); right:16px; }
 
-.card h2 { margin:0; font-size:clamp(3.4rem,12vw,6.5rem); font-weight:700; line-height:.9; transform:rotate(-3deg); }
+.card h2 { margin:0; color:var(--pink); font-size:clamp(3.4rem,12vw,6.5rem); font-weight:700; line-height:.9; transform:rotate(-3deg); }
 .card p { margin:14px 0 0; font-size:1.8rem; opacity:.75; animation:breathe 2.4s ease-in-out infinite; }
 .card.in { animation:rise 1s cubic-bezier(.2,.7,.2,1) both; }
 @keyframes breathe { 50% { opacity:.25; } }
@@ -83,7 +83,7 @@ h1 { margin:0; font-size:clamp(3.6rem,14vw,7.5rem); font-weight:700; line-height
 @media (pointer:coarse) { .nav { display:none; } }
 
 /* sparkles */
-.spark { position:fixed; pointer-events:none; color:#ff7eb6; font-size:16px; animation:fade .8s forwards; z-index:99; }
+.spark { position:fixed; pointer-events:none; color:#EB638B; font-size:16px; animation:fade .8s forwards; z-index:99; }
 @keyframes fade { to { opacity:0; transform:translateY(18px) scale(.3) rotate(90deg); } }
 
 @media (prefers-reduced-motion:reduce){ *,*::before{ animation:none !important; transition:none !important; } }
