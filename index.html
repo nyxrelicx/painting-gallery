@@ -11,41 +11,33 @@
 </head>
 <body>
 
+  <!-- cinema bars that open at the start -->
+  <div class="bar top"></div>
+  <div class="bar bottom"></div>
+  <div class="ig"><a href="https://www.instagram.com/nyxrelicx/" target="_blank" rel="noopener">@nyxrelicx on instagram</a></div>
+
   <main>
     <h1>nyxrelicx</h1>
+    <p class="tag">Hello, I don't really know what I'm doing but I try</p>
 
     <div class="shelf">
-      <button class="polaroid"><img data-n="1" alt="Painting 1"></button>
-      <button class="polaroid"><img data-n="2" alt="Painting 2"></button>
-      <button class="polaroid"><img data-n="3" alt="Painting 3"></button>
-      <button class="polaroid"><img data-n="5" alt="Painting 5"></button>
-      <button class="polaroid"><img data-n="6" alt="Painting 6"></button>
+      <button class="polaroid" aria-label="Open painting 1"><img data-n="1" alt="Painting 1"></button>
+      <button class="polaroid" aria-label="Open painting 2"><img data-n="2" alt="Painting 2"></button>
+      <button class="polaroid" aria-label="Open painting 3"><img data-n="3" alt="Painting 3"></button>
+      <button class="polaroid" aria-label="Open painting 5"><img data-n="5" alt="Painting 5"></button>
+      <button class="polaroid" aria-label="Open painting 6"><img data-n="6" alt="Painting 6"></button>
     </div>
 
-    <div class="menu">
-      <button class="pill pink" data-open="about">about me</button>
-      <button class="pill lilac" id="openGallery">gallery</button>
-      <a class="pill mint" href="https://www.instagram.com/nyxrelicx/" target="_blank" rel="noopener">instagram</a>
-    </div>
+    <p class="hint">click a painting to step inside</p>
   </main>
-
-  <!-- About popup -->
-  <dialog id="about" class="popup">
-    <div class="inner">
-      <button class="x" aria-label="Close">&times;</button>
-      <h2>about me &#10047;</h2>
-      <p>Hello, I don't really know what I'm doing but I try</p>
-      <a class="pill mint" href="https://www.instagram.com/nyxrelicx/" target="_blank" rel="noopener">follow me on instagram</a>
-    </div>
-  </dialog>
 
   <!-- Gallery theater: one painting at a time, click to reveal the next -->
   <dialog id="theater" aria-label="Gallery">
     <button class="x" aria-label="Close">&times;</button>
     <div id="stage">
-      <div id="card" class="card">
-        <h2>gallery &#10024;</h2>
-        <p>click to begin</p>
+      <div id="card" class="card" hidden>
+        <h2>the end</h2>
+        <p>click to watch again</p>
       </div>
       <figure id="frame" hidden>
         <img id="big" alt="">
@@ -54,6 +46,7 @@
     </div>
     <button class="nav prev" aria-label="Previous painting">&#8249;</button>
     <button class="nav next" aria-label="Next painting">&#8250;</button>
+    <div id="progress"><i></i></div>
     <div id="count" aria-live="polite"></div>
   </dialog>
 
