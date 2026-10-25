@@ -17,22 +17,25 @@ function load(img, n) {
   img.src = `images/p${n}.${exts[i]}`;
 }
 
-// Floating paintings on the home screen (click one to start the show there)
+// Title: split into letters so they can appear one by one
+const h1 = document.querySelector('h1');
+h1.setAttribute('aria-label', h1.textContent);
+h1.innerHTML = [...h1.textContent].map((c, i) => `<span aria-hidden="true" style="--i:${i}">${c}</span>`).join('');
+
+// Floating paintings on the home screen: click one to step inside
 document.querySelectorAll('.polaroid img').forEach(img => {
   const n = +img.dataset.n;
   load(img, n);
-  img.parentElement.addEventListener('click', () => openTheater(n));
+  img.parentElement.addEventListener('click', e => openTheater(n, e.currentTarget));
 });
 
 // ---------- Gallery theater ----------
 const theater = $('theater'), stage = $('stage'), card = $('card'), frame = $('frame');
-const big = $('big'), cap = $('cap'), count = $('count');
-const srcs = {};      // painting number -> working image url
-let list = [];        // painting numbers that actually exist
-let pos = -1;         // -1 = intro card, list.length = end card
-let ready = null;
+const big = $('big'), cap = $('cap'), count = $('count'), bar = $('progress').firstElementChild;
+const END = COUNT + 1;
+let cur = 0, token = 0;
 
-// Find which paintings exist (missing numbers are skipped automatically)
+// Checks which file ending a painting uses (null if the painting doesn't exist)
 function probe(n) {
   return new Promise(res => {
     let i = known[n] ? exts.indexOf(known[n]) : 0;
@@ -42,58 +45,68 @@ function probe(n) {
     im.src = `images/p${n}.${exts[i]}`;
   });
 }
-function prepare() {
-  return ready ||= Promise.all(Array.from({ length: COUNT }, (_, k) => probe(k + 1))).then(r =>
-    r.forEach((s, k) => { if (s) { srcs[k + 1] = s; list.push(k + 1); } }));
+const probes = {};
+const get = n => probes[n] ||= probe(n);
+
+// Next existing painting in a direction (missing numbers are skipped)
+async function neighbor(n, d) {
+  for (n += d; n >= 1 && n <= COUNT; n += d) if (await get(n)) return n;
+  return null;
 }
 
-// Replays the entrance animation
+// Replays an entrance animation
 function replay(el) { el.classList.remove('in'); void el.offsetWidth; el.classList.add('in'); }
 
-function showCard(end) {
+async function show(n) {
+  const t = ++token;
+  const src = await get(n);
+  if (t !== token) return;
+  if (!src) { const m = await neighbor(n, 1); return m ? show(m) : showEnd(); }
+  cur = n;
+  big.src = src;
+  big.alt = cap.textContent = titleOf(n);
+  count.textContent = `${String(n).padStart(2, '0')} / ${COUNT}`;
+  bar.style.width = (n / COUNT * 100) + '%';
+  try { await big.decode(); } catch {}
+  if (t !== token) return;
+  card.hidden = true;
+  frame.hidden = false;
+  replay(frame);
+  neighbor(n, 1).then(m => m && get(m)); // warm up the next one
+}
+
+function showEnd() {
+  token++;
+  cur = END;
   frame.hidden = true;
   card.hidden = false;
-  card.querySelector('h2').innerHTML = end ? 'the end &#9825;' : 'gallery &#10024;';
-  card.querySelector('p').textContent = end ? 'click to watch again' : 'click to begin';
   count.textContent = '';
-  pos = end ? list.length : -1;
+  bar.style.width = '100%';
   replay(card);
 }
 
-async function show(i) {
-  pos = i;
-  const n = list[i];
-  card.hidden = true;
-  frame.hidden = false;
-  big.src = srcs[n];
-  big.alt = cap.textContent = titleOf(n);
-  count.textContent = `${i + 1} / ${list.length}`;
-  try { await big.decode(); } catch {}
-  replay(frame);
-  // warm up the next painting so the reveal is instant
-  if (list[i + 1]) new Image().src = srcs[list[i + 1]];
-}
-
 async function step(d) {
-  await ready;
-  if (!list.length) return;
-  if (pos < 0) return d > 0 ? show(0) : undefined;
-  if (pos >= list.length) return d > 0 ? show(0) : show(list.length - 1);
-  const t = pos + d;
-  if (t < 0) showCard(false);
-  else if (t >= list.length) showCard(true);
-  else show(t);
+  if (cur === END) {
+    const m = await neighbor(d > 0 ? 0 : END, d > 0 ? 1 : -1);
+    if (m) show(m);
+    return;
+  }
+  if (!cur) return;
+  const m = await neighbor(cur, d);
+  if (m) show(m); else if (d > 0) showEnd();
 }
 
-async function openTheater(startN) {
+// Opens the theater with a circular reveal that grows out of the clicked painting
+function openTheater(n, el) {
+  const r = el.getBoundingClientRect();
+  theater.style.setProperty('--ox', r.left + r.width / 2 + 'px');
+  theater.style.setProperty('--oy', r.top + r.height / 2 + 'px');
+  cur = 0;
+  frame.hidden = true;
+  card.hidden = true;
   theater.showModal();
-  showCard(false);
-  ready = null;
-  await prepare();
-  if (startN) { const i = list.indexOf(startN); show(i < 0 ? 0 : i); }
+  show(n);
 }
-
-$('openGallery').addEventListener('click', () => openTheater());
 
 // Click the left third to go back, anywhere else to go forward
 stage.addEventListener('click', e => {
@@ -102,6 +115,7 @@ stage.addEventListener('click', e => {
 });
 theater.querySelector('.prev').addEventListener('click', e => { e.stopPropagation(); step(-1); });
 theater.querySelector('.next').addEventListener('click', e => { e.stopPropagation(); step(1); });
+theater.querySelector('.x').addEventListener('click', e => { e.stopPropagation(); theater.close(); });
 
 // Keyboard and swipe
 theater.addEventListener('keydown', e => {
@@ -122,26 +136,22 @@ stage.addEventListener('click', e => {
   if (stage.dataset.swiped) { e.stopImmediatePropagation(); delete stage.dataset.swiped; }
 }, true);
 
-// Open and close popups
-document.querySelectorAll('[data-open]').forEach(b =>
-  b.addEventListener('click', () => document.getElementById(b.dataset.open).showModal()));
-document.querySelectorAll('dialog').forEach(d => {
-  d.querySelector('.x').addEventListener('click', e => { e.stopPropagation(); d.close(); });
-  if (d.classList.contains('popup')) d.addEventListener('click', e => { if (e.target === d) d.close(); });
-});
-
-// Sparkles that follow the mouse
-if (!matchMedia('(prefers-reduced-motion: reduce)').matches && matchMedia('(pointer: fine)').matches) {
+// ---------- Home screen mood: a light that follows the mouse, depth, embers ----------
+if (matchMedia('(pointer: fine)').matches && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+  const root = document.documentElement;
   let last = 0;
   addEventListener('pointermove', e => {
-    if (e.timeStamp - last < 70) return;
+    root.style.setProperty('--mx', e.clientX + 'px');
+    root.style.setProperty('--my', e.clientY + 'px');
+    root.style.setProperty('--px', (e.clientX / innerWidth - .5) * 2);
+    root.style.setProperty('--py', (e.clientY / innerHeight - .5) * 2);
+    if (e.timeStamp - last < 60) return;
     last = e.timeStamp;
     const s = document.createElement('span');
     s.className = 'spark';
-    s.textContent = ['✦', '✧', '♡'][Math.floor(Math.random() * 3)];
     s.style.left = e.clientX + 'px';
     s.style.top = e.clientY + 'px';
     document.body.append(s);
-    setTimeout(() => s.remove(), 800);
+    setTimeout(() => s.remove(), 900);
   });
 }
